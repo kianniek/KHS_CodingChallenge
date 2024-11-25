@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Smoke
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 21300000, guid: b617541f39090e345abdc3b04f42334f, type: 3}
+    - {fileID: 21300000, guid: 7e4ad457984a87d46a9c3dc5b7240205, type: 3}
+    - {fileID: 21300000, guid: 22951f2e7a66cd246b96133f47f46497, type: 3}
+    - {fileID: 21300000, guid: 1fa0d73546489a8468ccf83d943a3fae, type: 3}
+    - {fileID: 21300000, guid: 481b37517f8ce78438b12b455b8063ea, type: 3}
+    - {fileID: 21300000, guid: 4b0746af0f01da646b2278cb7b723c3e, type: 3}
+    - {fileID: 21300000, guid: b14cb8d46312fd9428ff9873260b300d, type: 3}
+    - {fileID: 21300000, guid: 4c2f5419bf26e7647baf4b4f3e2a022f, type: 3}
+    - {fileID: 21300000, guid: 42cab87b9f09d8b47ad31a99dd5a4d76, type: 3}
+    - {fileID: 21300000, guid: 643434036bda3e44ab9691fcdd28a2a5, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 481b37517f8ce78438b12b455b8063ea: 21300000
+    - 643434036bda3e44ab9691fcdd28a2a5: 21300000
+    - b14cb8d46312fd9428ff9873260b300d: 21300000
+    - 1fa0d73546489a8468ccf83d943a3fae: 21300000
+    - 7e4ad457984a87d46a9c3dc5b7240205: 21300000
+    - 4c2f5419bf26e7647baf4b4f3e2a022f: 21300000
+    - 42cab87b9f09d8b47ad31a99dd5a4d76: 21300000
+    - 22951f2e7a66cd246b96133f47f46497: 21300000
+    - b617541f39090e345abdc3b04f42334f: 21300000
+    - 4b0746af0f01da646b2278cb7b723c3e: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 481b37517f8ce78438b12b455b8063ea, type: 3}
+  - {fileID: 21300000, guid: 643434036bda3e44ab9691fcdd28a2a5, type: 3}
+  - {fileID: 21300000, guid: b14cb8d46312fd9428ff9873260b300d, type: 3}
+  - {fileID: 21300000, guid: 1fa0d73546489a8468ccf83d943a3fae, type: 3}
+  - {fileID: 21300000, guid: 7e4ad457984a87d46a9c3dc5b7240205, type: 3}
+  - {fileID: 21300000, guid: 4c2f5419bf26e7647baf4b4f3e2a022f, type: 3}
+  - {fileID: 21300000, guid: 42cab87b9f09d8b47ad31a99dd5a4d76, type: 3}
+  - {fileID: 21300000, guid: 22951f2e7a66cd246b96133f47f46497, type: 3}
+  - {fileID: 21300000, guid: b617541f39090e345abdc3b04f42334f, type: 3}
+  - {fileID: 21300000, guid: 4b0746af0f01da646b2278cb7b723c3e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - FX033_05
+  - FX033_10
+  - FX033_07
+  - FX033_04
+  - FX033_02
+  - FX033_08
+  - FX033_09
+  - FX033_03
+  - FX033_01
+  - FX033_06
+  m_RenderDataMap: {}
+  m_Tag: Smoke
+  m_IsVariant: 0
