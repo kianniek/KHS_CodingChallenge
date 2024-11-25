@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811aa63c461343009c1b7a25a6485e59, type: 3}
+  m_Name: InteractionGlobalSettings
+  m_EditorClassIdentifier: 
+  interactionDistance: 1.5
+  interactionLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
