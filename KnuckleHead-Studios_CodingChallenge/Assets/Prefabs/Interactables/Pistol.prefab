@@ -277,12 +277,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionOffset: {x: 0.022, y: 0.103, z: 0}
   rotationOffset: {x: -90, y: 0, z: 90}
+  onEquip:
+    m_PersistentCalls:
+      m_Calls: []
+  onUnEquip:
+    m_PersistentCalls:
+      m_Calls: []
   isAutoMode: 0
+  maxAmmoCount: 30
+  fireRate: 0.05
   bulletPrefab: {fileID: 3956410280571597544, guid: 2ff5413985fa5004a93a8879dcf92c6f, type: 3}
   bulletSpawnPoint: {fileID: 8418393196741454593}
   bulletSpeed: 10
-  muzzleFlash: {fileID: 0}
-  fireRate: 0
+  onShoot:
+    m_PersistentCalls:
+      m_Calls: []
+  onEmptyShoot:
+    m_PersistentCalls:
+      m_Calls: []
+  onModeSwitchToSingle:
+    m_PersistentCalls:
+      m_Calls: []
+  onModeSwitchToAuto:
+    m_PersistentCalls:
+      m_Calls: []
+  onAmmoUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1759552926059230330
 GameObject:
   m_ObjectHideFlags: 0
