@@ -7,7 +7,7 @@ namespace InteractableSystem
 {
     public class PlayerInputHandler : MonoBehaviour
     {
-        [SerializeField] InteractionGlobalSettings interactionGlobalSettings;
+        [SerializeField] private InteractionGlobalSettings interactionGlobalSettings;
         private EquipmentSystemManager equipmentSystem;
         private InputSystem_Actions inputActions;
 

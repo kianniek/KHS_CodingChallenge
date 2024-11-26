@@ -6,12 +6,12 @@ namespace Interactablesystem
 {
     public class ButtonScript : MonoBehaviour
     {
-        [SerializeField] private GameObject buttonMovingPart;
         private MeshFilter buttonMesh;
         private float lowerAmount;
-
-        [SerializeField] private bool isToggleable;
         private bool isPressed;
+
+        [SerializeField] private GameObject buttonMovingPart;
+        [SerializeField] private bool isToggleable;
         [SerializeField] private float popUpDelay = 1f;
 
         public UnityEvent onButtonPressed;
@@ -29,6 +29,9 @@ namespace Interactablesystem
             lowerAmount = buttonMesh.mesh.bounds.size.y * 0.2f;
         }
 
+        /// <summary>
+        /// Presses the button.
+        /// </summary>
         public void PressButton()
         {
             if (isToggleable)
@@ -66,6 +69,9 @@ namespace Interactablesystem
             ResetButtonPosition();
         }
 
+        /// <summary>
+        /// Resets the button to its original position.
+        /// </summary>
         public void ResetButtonPosition()
         {
             Vector3 currentPosition = buttonMovingPart.transform.position;

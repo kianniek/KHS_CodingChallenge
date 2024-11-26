@@ -15,8 +15,7 @@ namespace Animation
 		//Speed at which this gameobject turns toward the controller's velocity;
 		public float turnSpeed = 500f;
 
-		Transform parentTransform;
-		Transform tr;
+		private Transform parentTransform;
 
 		//Current (local) rotation around the (local) y axis of this gameobject;
 		float currentYRotation = 0f;
@@ -30,8 +29,7 @@ namespace Animation
 
 		//Setup;
 		void Start () {
-			tr = transform;
-			parentTransform = tr.parent;
+			parentTransform = transform.parent;
 
 			//Throw warning if no controller has been assigned;
 			if(controller == null)
@@ -63,7 +61,7 @@ namespace Animation
 			_velocity.Normalize();
 
 			//Get current 'forward' vector;
-			Vector3 _currentForward = tr.forward;
+			Vector3 _currentForward = transform.forward;
 
 			//Calculate (signed) angle between velocity and forward direction;
 			float _angleDifference = VectorMath.GetAngle(_currentForward, _velocity, parentTransform.up);
@@ -90,7 +88,7 @@ namespace Animation
 				currentYRotation += 360f;
 
 			//Set transform rotation using Quaternion.Euler;
-			tr.localRotation = Quaternion.Euler(0f, currentYRotation, 0f);
+			transform.localRotation = Quaternion.Euler(0f, currentYRotation, 0f);
 
 		}
 

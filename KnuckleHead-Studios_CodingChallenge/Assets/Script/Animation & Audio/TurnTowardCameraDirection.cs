@@ -9,11 +9,9 @@ namespace Animation
 	public class TurnTowardCameraDirection : MonoBehaviour {
 
 		public CameraController cameraController;
-		Transform tr;
 
 		//Setup;
 		void Start () {
-			tr = transform;
 
 			if(cameraController == null)
 				Debug.LogWarning("No camera controller reference has been assigned to this script.", this);
@@ -30,7 +28,7 @@ namespace Animation
 			Vector3 _upDirection = cameraController.GetUpDirection();
 
 			//Set rotation;
-			tr.rotation = Quaternion.LookRotation(_forwardDirection, _upDirection);
+			transform.rotation = Quaternion.LookRotation(_forwardDirection, _upDirection);
 		}
 	}
 }

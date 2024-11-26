@@ -6,17 +6,17 @@ namespace Interactablesystem
     public class KeyLock : MonoBehaviour
     {
         // References to the key and lock GameObjects
-        public GameObject key; // The key GameObject
-        public GameObject lockBody; // The lock body (the part where the key goes into)
+        [SerializeField] private GameObject key; // The key GameObject
+        [SerializeField] private  GameObject lockBody; // The lock body (the part where the key goes into)
 
-        public float rotationAngle = 90f; // Angle the key rotates to when turned (e.g., 90 degrees)
-        public float rotationSpeed = 2f; // Speed of the key rotation
+        [SerializeField] private  float rotationAngle = 90f; // Angle the key rotates to when turned (e.g., 90 degrees)
+        [SerializeField] private  float rotationSpeed = 2f; // Speed of the key rotation
 
-        private bool isKeyTurned = false; // Current state of the key (whether it's turned or not)
-        private Quaternion targetRotation; // The target rotation of the key
+        [SerializeField] private  bool isKeyTurned = false; // Current state of the key (whether it's turned or not)
+        [SerializeField] private  Quaternion targetRotation; // The target rotation of the key
 
         // UnityEvent to trigger the key toggle action
-        public UnityEvent<bool> onToggleKey;
+        [SerializeField] private  UnityEvent<bool> onToggleKey;
 
         private void Awake()
         {
@@ -44,7 +44,10 @@ namespace Interactablesystem
             );
         }
 
-        // Method to toggle the key (turn the key in the lock)
+        /// <summary>
+        /// Method to toggle the key (turn the key in the lock)
+        /// </summary>
+        /// <param name="turn"></param>
         public void ToggleKey(bool turn)
         {
             isKeyTurned = turn;

@@ -9,6 +9,7 @@ public class Gun : Item
     private bool isShooting = false;
     private int ammoCount = 0;
     [SerializeField] private int maxAmmoCount = 30;
+    [SerializeField] private float fireRate = 0.1f;
 
     [Header("Bullet Settings")] [SerializeField]
     private GameObject bulletPrefab;
@@ -16,27 +17,24 @@ public class Gun : Item
     [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private float bulletSpeed = 10f;
     [SerializeField] private UnityEvent onShoot;
-    [SerializeField] private UnityEvent<int> onAmmoUpdate;
     [SerializeField] private UnityEvent onEmptyShoot;
     [SerializeField] private UnityEvent onModeSwitchToSingle;
     [SerializeField] private UnityEvent onModeSwitchToAuto;
-
-
-    [SerializeField] private float fireRate = 0.1f;
+    [SerializeField] private UnityEvent<int> onAmmoUpdate;
 
     public int Reload(int ammoToAdd)
     {
         // Calculate how much ammoToAdd we can add to the clip
         var ammoNeeded = maxAmmoCount - ammoCount;
-    
+
         // If we have more ammoToAdd than the clip can take, only fill it up to maxAmmoCount
         if (ammoToAdd >= ammoNeeded)
         {
             ammoCount = maxAmmoCount;
-            
+
             // Update the ammo count
             UpdateAmmoCount();
-            
+
             // Return the leftover ammoToAdd
             return ammoToAdd - ammoNeeded;
         }
@@ -44,10 +42,10 @@ public class Gun : Item
         {
             // Otherwise, add all the ammoToAdd we have to the clip
             ammoCount += ammoToAdd;
-            
+
             // Update the ammo count
             UpdateAmmoCount();
-            
+
             // Return 0 since there's no leftover ammoToAdd
             return 0;
         }
@@ -133,6 +131,7 @@ public class Gun : Item
         {
             // Single shot fire
             Debug.Log("Firing shot!");
+            SpawnBullet();
             onShoot.Invoke();
             ammoCount--;
         }
@@ -152,6 +151,19 @@ public class Gun : Item
             Shoot();
             yield return new WaitForSeconds(fireRate);
         }
+    }
+
+    private void SpawnBullet()
+    {
+        if (!bulletPrefab || !bulletSpawnPoint)
+        {
+            Debug.LogWarning("Bullet prefab or bullet spawn point not set.");
+            return;
+        }
+
+        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var bulletRigidbody = bullet.GetComponent<Rigidbody>();
+        bulletRigidbody.AddForce(bulletSpawnPoint.forward * bulletSpeed, ForceMode.Impulse);
     }
 
     private void UpdateAmmoCount()

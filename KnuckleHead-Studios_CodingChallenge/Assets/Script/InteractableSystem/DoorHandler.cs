@@ -5,14 +5,18 @@ namespace Interactablesystem
 {
     public class DoorHandler : MonoBehaviour
     {
-        public float openAngle = 90f; // The angle the door will rotate when opened
-        public float closeAngle = 0f; // The angle the door will be at when closed
-        public float doorSpeed = 2f; // Speed at which the door rotates
-        public Transform playerTransform; // Reference to the camera's transform
-
         private bool isOpening = false;
         private bool isClosing = false;
 
+        [SerializeField] float openAngle = 90f; // The angle the door will rotate when opened
+        [SerializeField] public float closeAngle = 0f; // The angle the door will be at when closed
+        [SerializeField] public float doorSpeed = 2f; // Speed at which the door rotates
+        [SerializeField] public Transform playerTransform; // Reference to the camera's transform
+
+        /// <summary>
+        /// Interact with the door to open or close it.
+        /// </summary>
+        /// <param name="isOpen"></param>
         public void DoorInteraction(bool isOpen)
         {
             if (isOpen)
@@ -35,7 +39,7 @@ namespace Interactablesystem
             Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
 
             float dotProduct = Vector3.Dot(transform.right, directionToPlayer);
-            
+
             Debug.Log(dotProduct);
 
             // If the camera is in front of the door, swing it open to the right

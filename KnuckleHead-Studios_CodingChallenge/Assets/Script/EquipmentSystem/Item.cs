@@ -76,12 +76,12 @@ namespace EquipmentSystem
             onUnEquip.Invoke();
         }
         
-        private void SetCollidersActive(bool _active)
+        private void SetCollidersActive(bool active)
         {
             if(_colliders == null) return;
             foreach (var col in _colliders)
             {
-                col.enabled = _active;
+                col.enabled = active;
             }
         }
 

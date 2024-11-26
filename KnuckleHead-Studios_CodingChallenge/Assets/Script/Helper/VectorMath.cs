@@ -6,84 +6,126 @@ namespace Helper
 	//This is a static helper class that offers various methods for calculating and modifying vectors (as well as float values);
 	public static class VectorMath {
 
-		//Calculate signed angle (ranging from -180 to +180) between '_vector_1' and '_vector_2';
-		public static float GetAngle(Vector3 _vector1, Vector3 _vector2, Vector3 _planeNormal)
+		/// <summary>
+		/// Calculate signed angle (ranging from -180 to +180) between '_vector_1' and '_vector_2';
+		/// </summary>
+		/// <param name="vector1"></param>
+		/// <param name="vector2"></param>
+		/// <param name="planeNormal"></param>
+		/// <returns></returns>
+		public static float GetAngle(Vector3 vector1, Vector3 vector2, Vector3 planeNormal)
 		{
 			//Calculate angle and sign;
-			float _angle = Vector3.Angle(_vector1,_vector2);
-			float _sign = Mathf.Sign(Vector3.Dot(_planeNormal,Vector3.Cross(_vector1,_vector2)));
+			var angle = Vector3.Angle(vector1,vector2);
+			var sign = Mathf.Sign(Vector3.Dot(planeNormal,Vector3.Cross(vector1,vector2)));
 			
 			//Combine angle and sign;
-			float _signedAngle = _angle * _sign;
+			var signedAngle = angle * sign;
 
-			return _signedAngle;
+			return signedAngle;
 		}
 
-		//Returns the length of the part of a vector that points in the same direction as '_direction' (i.e., the dot product);
-		public static float GetDotProduct(Vector3 _vector, Vector3 _direction)
+		/// <summary>
+		/// Returns the length of the part of a vector that points in the same direction as 'direction' (i.e., the dot product)
+		/// </summary>
+		/// <param name="vector"></param>
+		/// <param name="direction"></param>
+		/// <returns></returns>
+		public static float GetDotProduct(Vector3 vector, Vector3 direction)
 		{
 			//Normalize vector if necessary;
-			if(_direction.sqrMagnitude != 1)
-				_direction.Normalize();
+			if (direction.sqrMagnitude != 1)
+			{
+				direction.Normalize();
+			}
 				
-			float _length = Vector3.Dot(_vector, _direction);
+			var length = Vector3.Dot(vector, direction);
 
-			return _length;
+			return length;
 		}
 		
-		//Remove all parts from a vector that are pointing in the same direction as '_direction';
-		public static Vector3 RemoveDotVector(Vector3 _vector, Vector3 _direction)
+		/// <summary>
+		/// Remove all parts from a vector that are pointing in the same direction as 'direction'
+		/// </summary>
+		/// <param name="vector"></param>
+		/// <param name="direction"></param>
+		/// <returns></returns>
+		public static Vector3 RemoveDotVector(Vector3 vector, Vector3 direction)
 		{
 			//Normalize vector if necessary;
-			if(_direction.sqrMagnitude != 1)
-				_direction.Normalize();
+			if(direction.sqrMagnitude != 1)
+				direction.Normalize();
 			
-			float _amount = Vector3.Dot(_vector, _direction);
+			var amount = Vector3.Dot(vector, direction);
 			
-			_vector -= _direction * _amount;
+			vector -= direction * amount;
 			
-			return _vector;
+			return vector;
 		}
 		
-		//Extract and return parts from a vector that are pointing in the same direction as '_direction';
-		public static Vector3 ExtractDotVector(Vector3 _vector, Vector3 _direction)
+		/// <summary>
+		/// Extract and return parts from a vector that are pointing in the same direction as 'direction'
+		/// </summary>
+		/// <param name="vector"></param>
+		/// <param name="direction"></param>
+		/// <returns></returns>
+		public static Vector3 ExtractDotVector(Vector3 vector, Vector3 direction)
 		{
 			//Normalize vector if necessary;
-			if(_direction.sqrMagnitude != 1)
-				_direction.Normalize();
+			if(direction.sqrMagnitude != 1)
+				direction.Normalize();
 			
-			float _amount = Vector3.Dot(_vector, _direction);
+			var amount = Vector3.Dot(vector, direction);
 			
-			return _direction * _amount;
+			return direction * amount;
 		}
 
-		//Rotate a vector onto a plane defined by '_planeNormal'; 
-		public static Vector3 RotateVectorOntoPlane(Vector3 _vector, Vector3 _planeNormal, Vector3 _upDirection)
+		/// <summary>
+		/// Rotate a vector onto a plane defined by 'planeNormal'
+		/// </summary>
+		/// <param name="vector"></param>
+		/// <param name="planeNormal"></param>
+		/// <param name="upDirection"></param>
+		/// <returns></returns>
+		public static Vector3 RotateVectorOntoPlane(Vector3 vector, Vector3 planeNormal, Vector3 upDirection)
 		{
 			//Calculate rotation;
-			Quaternion _rotation = Quaternion.FromToRotation(_upDirection, _planeNormal);
+			var rotation = Quaternion.FromToRotation(upDirection, planeNormal);
 
 			//Apply rotation to vector;
-			_vector = _rotation * _vector;
+			vector = rotation * vector;
 			
-			return _vector;
+			return vector;
 		}
 
-		//Project a point onto a line defined by '_lineStartPosition' and '_lineDirection';
-		public static Vector3 ProjectPointOntoLine(Vector3 _lineStartPosition, Vector3 _lineDirection, Vector3 _point)
+		/// <summary>
+		/// Project a point onto a line defined by '_lineStartPosition' and '_lineDirection';
+		/// </summary>
+		/// <param name="lineStartPosition"></param>
+		/// <param name="lineDirection"></param>
+		/// <param name="point"></param>
+		/// <returns></returns>
+		public static Vector3 ProjectPointOntoLine(Vector3 lineStartPosition, Vector3 lineDirection, Vector3 point)
 		{		
 			//Caclculate vector pointing from '_lineStartPosition' to '_point';
-			Vector3 _projectLine = _point - _lineStartPosition;
+			var projectLine = point - lineStartPosition;
 	
-			float dotProduct = Vector3.Dot(_projectLine, _lineDirection);
+			var dotProduct = Vector3.Dot(projectLine, lineDirection);
 	
-			return _lineStartPosition + _lineDirection * dotProduct;
+			return lineStartPosition + lineDirection * dotProduct;
 		}
 
-		//Increments a vector toward a target vector, using '_speed' and '_deltaTime';
-		public static Vector3 IncrementVectorTowardTargetVector(Vector3 _currentVector, float _speed, float _deltaTime, Vector3 _targetVector)
+		/// <summary>
+		/// Increments a vector toward a target vector, using '_speed' and '_deltaTime';
+		/// </summary>
+		/// <param name="currentVector"></param>
+		/// <param name="speed"></param>
+		/// <param name="deltaTime"></param>
+		/// <param name="targetVector"></param>
+		/// <returns></returns>
+		public static Vector3 IncrementVectorTowardTargetVector(Vector3 currentVector, float speed, float deltaTime, Vector3 targetVector)
 		{
-			return Vector3.MoveTowards(_currentVector, _targetVector, _speed * _deltaTime);
+			return Vector3.MoveTowards(currentVector, targetVector, speed * deltaTime);
 		}
 	}
 }

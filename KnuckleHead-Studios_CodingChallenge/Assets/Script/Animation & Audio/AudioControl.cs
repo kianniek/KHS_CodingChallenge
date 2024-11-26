@@ -11,10 +11,9 @@ namespace Audio
 	public class AudioControl : MonoBehaviour {
 
 		//References to components;
-		Controller controller;
-		Animator animator;
-		Mover mover;
-		Transform tr;
+		private Controller controller;
+		private Animator animator;
+		private Mover mover;
 		public AudioSource audioSource;
 
 		//Whether footsteps will be based on the currently playing animation or calculated based on walked distance (see further below);
@@ -49,7 +48,6 @@ namespace Audio
 			controller = GetComponent<Controller>();
 			animator = GetComponentInChildren<Animator>();
 			mover = GetComponent<Mover>();
-			tr = transform;
 
 			//Connecting events to controller events;
 			controller.OnLand += OnLand;
@@ -66,7 +64,7 @@ namespace Audio
 			Vector3 _velocity = controller.GetVelocity();
 
 			//Calculate horizontal velocity;
-			Vector3 _horizontalVelocity = VectorMath.RemoveDotVector(_velocity, tr.up);
+			Vector3 _horizontalVelocity = VectorMath.RemoveDotVector(_velocity, transform.up);
 
 			FootStepUpdate(_horizontalVelocity.magnitude);
 		}
@@ -113,7 +111,7 @@ namespace Audio
 		void OnLand(Vector3 _v)
 		{
 			//Only trigger sound if downward velocity exceeds threshold;
-			if(VectorMath.GetDotProduct(_v, tr.up) > -landVelocityThreshold)
+			if(VectorMath.GetDotProduct(_v, transform.up) > -landVelocityThreshold)
 				return;
 
 			//Play land audio clip;

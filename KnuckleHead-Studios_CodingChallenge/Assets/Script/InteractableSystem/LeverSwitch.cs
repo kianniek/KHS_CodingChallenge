@@ -6,14 +6,14 @@ namespace Interactablesystem
     public class LeverSwitch : MonoBehaviour
     {
         [Header("Lever Settings")] public GameObject leverPivot;
-        public GameObject leverHandle;
-        public float rotationAngle = 90f;
-        public float rotationSpeed = 2f;
+        [SerializeField] private GameObject leverHandle;
+        [SerializeField] private  float rotationAngle = 90f;
+        [SerializeField] private  float rotationSpeed = 2f;
 
         private bool isLeverActivated = false;
         private Quaternion targetRotation;
 
-        public UnityEvent<bool> onToggleLever;
+        [SerializeField] private  UnityEvent<bool> onToggleLever;
 
         private void Awake()
         {
@@ -40,6 +40,10 @@ namespace Interactablesystem
             );
         }
 
+        /// <summary>
+        /// Method to toggle the lever (activate or deactivate the lever)
+        /// </summary>
+        /// <param name="activate"></param>
         public void ToggleLever(bool activate)
         {
             isLeverActivated = activate;

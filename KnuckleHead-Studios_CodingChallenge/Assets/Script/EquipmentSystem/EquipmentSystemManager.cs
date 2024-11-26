@@ -24,11 +24,11 @@ namespace EquipmentSystem
         private Dictionary<EquipmentSlot, Item> equippedItems;
 
         // Define origin points for each equipment slot
-        public GameObject leftHandOrigin;
-        public GameObject rightHandOrigin;
-        public GameObject headOrigin;
+        [SerializeField] private GameObject leftHandOrigin;
+        [SerializeField] private GameObject rightHandOrigin;
+        [SerializeField] private GameObject headOrigin;
 
-        void Start()
+        private void Start()
         {
             // Initialize the equipment dictionary
             equippedItems = new Dictionary<EquipmentSlot, Item>();
@@ -36,7 +36,7 @@ namespace EquipmentSystem
 
         // Equip item to a specific slot (left hand, right hand, or head)
         /// <summary>
-        /// 
+        /// Equip an item to a specific slot.
         /// </summary>
         /// <param name="slot"></param>
         /// <param name="itemObject"></param>
@@ -55,7 +55,7 @@ namespace EquipmentSystem
                 Debug.LogError("Item component not found.");
                 return false;
             }
-            
+
             Debug.Log($"Equipping {item.name} to {slot}");
 
             // Unequip the existing item in the target slot if necessary
@@ -85,7 +85,11 @@ namespace EquipmentSystem
         }
 
 
-        // Unequip item from a specific slot
+        /// <summary>
+        /// Unequip the item in the specified slot.
+        /// </summary>
+        /// <param name="_slot">Slot to unequip an item from</param>
+        /// <returns>Whether the Item has succesfully Unequipped</returns>
         public bool UnequipItem(EquipmentSlot _slot)
         {
             if (!equippedItems.ContainsKey(_slot))
@@ -128,6 +132,12 @@ namespace EquipmentSystem
             return true;
         }
 
+        /// <summary>
+        /// Unequip an item from any slot in the equipment system.
+        /// Prioritizes unequipping the item that got equipped last.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public bool UnequipItem(Item item)
         {
             //find if the item is equipped and in which slot
@@ -150,7 +160,10 @@ namespace EquipmentSystem
             return true;
         }
 
-        // Use the item in the specified slot (e.g., pressing a button to use it)
+        /// <summary>
+        /// Use the item in the specified slot.
+        /// </summary>
+        /// <param name="slot"></param>
         public void UseItem(EquipmentSlot slot)
         {
             if (equippedItems.ContainsKey(slot))
@@ -159,6 +172,9 @@ namespace EquipmentSystem
             }
         }
 
+        /// <summary>
+        /// Swap the items in the left and right hand slots.
+        /// </summary>
         public void SwapPrimarySecondaryHands()
         {
             var isLeftHandEmpty = !equippedItems.ContainsKey(EquipmentSlot.LeftHand);
@@ -181,7 +197,10 @@ namespace EquipmentSystem
             EquipItem(EquipmentSlot.RightHand, leftHandItem.gameObject);
         }
 
-        // Stop using the item in the specified slot
+        /// <summary>
+        /// Stop using the item in the specified slot. This is called when the input for using the item is released.
+        /// </summary>
+        /// <param name="slot"></param>
         public void StopUseItem(EquipmentSlot slot)
         {
             if (equippedItems.ContainsKey(slot))
@@ -190,7 +209,10 @@ namespace EquipmentSystem
             }
         }
 
-        // Perform a secondary action with the item in the specified slot
+        /// <summary>
+        /// Perform the secondary action of the item in the specified slot.
+        /// </summary>
+        /// <param name="slot"></param>
         public void SecondaryAction(EquipmentSlot slot)
         {
             if (equippedItems.ContainsKey(slot))
@@ -199,7 +221,11 @@ namespace EquipmentSystem
             }
         }
 
-        // Helper method to get the origin point for each slot
+        /// <summary>
+        /// Get the origin point for the specified equipment slot.
+        /// </summary>
+        /// <param name="slot"></param>
+        /// <returns></returns>
         private Transform GetSlotOrigin(EquipmentSlot slot)
         {
             switch (slot)
@@ -219,7 +245,7 @@ namespace EquipmentSystem
         /// Get the item in all slots except the specified slot.
         /// </summary>
         /// <param name="slot"></param>
-        /// <returns></returns>
+        /// <returns>List of Items in all slots except the specified slot</returns>
         public Item[] GetItemInSlotsExclude(EquipmentSlot slot)
         {
             List<Item> items = new List<Item>();
@@ -234,6 +260,10 @@ namespace EquipmentSystem
             return items.ToArray();
         }
 
+        /// <summary>
+        /// Get all equipped items in the equipment system. Without any slot specification.
+        /// </summary>
+        /// <returns>List of all Items in the equipment system</returns>
         public Item[] GetEquippedItems()
         {
             List<Item> items = new List<Item>();

@@ -35,14 +35,8 @@ namespace EquipmentSystem
             Debug.Log(isOn ? "Flashlight turned on." : "Flashlight turned off.");
         }
         
-        public override void StoppedUse()
-        {
-            
-        }
+        public override void StoppedUse() { }
 
-        public override void SecondaryUse()
-        {
-            Debug.Log("Flashlight secondary use.");
-        }
+        public override void SecondaryUse() { }
     }
 }

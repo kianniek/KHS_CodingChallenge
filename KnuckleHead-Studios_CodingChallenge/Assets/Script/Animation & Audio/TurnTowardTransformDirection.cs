@@ -8,12 +8,10 @@ namespace Animation
 	public class TurnTowardTransformDirection : MonoBehaviour {
 
 		public Transform targetTransform;
-		Transform tr;
-		Transform parentTransform;
+		private Transform parentTransform;
 
 		//Setup;
 		void Start () {
-			tr = transform;
 			parentTransform = transform.parent;
 
 			if(targetTransform == null)
@@ -31,7 +29,7 @@ namespace Animation
 			Vector3 _upDirection = parentTransform.up;
 
 			//Set rotation;
-			tr.rotation = Quaternion.LookRotation(_forwardDirection, _upDirection);
+			transform.rotation = Quaternion.LookRotation(_forwardDirection, _upDirection);
 		}
 	}
 }

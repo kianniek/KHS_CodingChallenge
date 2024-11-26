@@ -6,11 +6,10 @@ namespace EquipmentSystem
 {
     public class Throwable : Item
     {
-        [SerializeField] private float throwForce = 10f;
-        
         private EquipmentSystemManager _equipmentSystemManager;
         private Camera _mainCamera;
         
+        [SerializeField] private float throwForce = 10f;
         
         public override void Awake()
         {
@@ -66,9 +65,6 @@ namespace EquipmentSystem
             Debug.Log("Rock secondary use.");
         }
         
-        public override void StoppedUse()
-        {
-            
-        }
+        public override void StoppedUse() { }
     }
 }

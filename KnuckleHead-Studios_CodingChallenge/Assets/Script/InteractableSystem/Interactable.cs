@@ -20,33 +20,43 @@ namespace InteractableSystem
         Interact,
         Equip
     }
+
 #if UNITY_EDITOR
     [CanEditMultipleObjects]
 #endif
     public class Interactable : MonoBehaviour
     {
-        //[Header("Interactable Prompt Settings")] 
+        [Header("Interactable Prompt Settings")]
+        [SerializeField, Tooltip("The canvas displayed when the player is near the object")]
+        internal GameObject promptCanvas;
 
-        [SerializeField] internal GameObject promptCanvas; // The canvas displayed when the player is near the object
-        [SerializeField] internal Vector3 promptCanvasOffset = Vector3.up; // The offset of the prompt canvas
-        [SerializeField] internal bool useWorldSpaceDirections = false; // Whether the prompt canvas uses world space or not
+        [SerializeField, Tooltip("The offset of the prompt canvas")]
+        internal Vector3 promptCanvasOffset = Vector3.up;
 
-        [SerializeField]
-        internal string promptTriggerTag = "Player"; // The tag of the object that triggers the prompt canvas
+        [SerializeField, Tooltip("Whether the prompt canvas uses world space or not")]
+        internal bool useWorldSpaceDirections = false;
 
-        private Rigidbody rigidbody; // The rigidbody of the interactable object
-        private Collider collider; // The collider of the interactable object
-        [SerializeField] private ColliderShape colliderShape = ColliderShape.Sphere; // Choose the shape of the collider
+        [SerializeField, Tooltip("The tag of the object that triggers the prompt canvas")]
+        internal string promptTriggerTag = "Player";
+
+        [SerializeField, Tooltip("Choose the shape of the _collider")]
+        private ColliderShape colliderShape = ColliderShape.Sphere;
+
         [SerializeField] private InteractionGlobalSettings interactionGlobalSettings;
-        [SerializeField] private bool triggerOnly = true; // Set the collider as a trigger or not
+
+        [SerializeField, Tooltip("Set the _collider as a trigger or not")]
+        private bool triggerOnly = true;
 
         //[Header("Interaction Settings")]
         [SerializeField] internal InteractionType interactionType; // Whether the object can be equipped or not
 
-        public EquipmentSlot slot; // The slot where the item will be equipped
-        private bool isEquipped = false; // Whether the object is equipped or not
+        [SerializeField, Tooltip("The slot where the item will be equipped")]
+        private EquipmentSlot slot;
 
         private PlayerInputHandler playerInputHandler;
+        private Rigidbody _rigidbody;
+        private Collider _collider;
+        private bool isEquipped; // Only used for internal logic
 
         private void OnEnable()
         {
@@ -56,7 +66,7 @@ namespace InteractableSystem
 
         private void Awake()
         {
-            rigidbody = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         private void Start()
@@ -85,13 +95,13 @@ namespace InteractableSystem
 
         private void AddCollider()
         {
-            // Check if there's already a collider
+            // Check if there's already a _collider
             Collider existingCollider = GetComponent<Collider>();
             if (existingCollider != null)
             {
                 if (existingCollider.isTrigger)
                 {
-                    collider = existingCollider;
+                    _collider = existingCollider;
                 }
             }
 
@@ -104,7 +114,7 @@ namespace InteractableSystem
                                                  transform.lossyScale.z);
                     sphereCollider.radius = worldSpaceRadius;
                     sphereCollider.isTrigger = triggerOnly;
-                    collider = sphereCollider;
+                    _collider = sphereCollider;
                     break;
 
                 case ColliderShape.Cube:
@@ -113,37 +123,39 @@ namespace InteractableSystem
                     boxCollider.size = new Vector3(intDist / transform.lossyScale.x, intDist / transform.lossyScale.y,
                         intDist / transform.lossyScale.z);
                     boxCollider.isTrigger = triggerOnly;
-                    collider = boxCollider;
+                    _collider = boxCollider;
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         /// <summary>
-        /// Set the collider as active or inactive.
+        /// Set the _collider as active or inactive.
         /// </summary>
         /// <param name="_isActive"></param>
         public void ColliderSetActive(bool _isActive)
         {
-            if (!collider)
+            if (!_collider)
             {
                 return;
             }
 
-            collider.enabled = _isActive;
+            _collider.enabled = _isActive;
         }
 
         /// <summary>
-        /// Set the rigidbody as kinematic or not.
+        /// Set the _rigidbody as kinematic or not.
         /// </summary>
         /// <param name="_isKinematic"></param>
         public void RigidbodySetDiabled(bool _isKinematic)
         {
-            if (!rigidbody)
+            if (!_rigidbody)
             {
                 return;
             }
 
-            rigidbody.isKinematic = _isKinematic;
+            _rigidbody.isKinematic = _isKinematic;
             isEquipped = _isKinematic;
         }
 
@@ -157,11 +169,11 @@ namespace InteractableSystem
             Canvas canvas = promptCanvas.GetComponent<Canvas>();
             if (canvas != null)
             {
-                canvas.renderMode = RenderMode.WorldSpace;  // Make sure the canvas is in world space
+                canvas.renderMode = RenderMode.WorldSpace; // Make sure the canvas is in world space
             }
 
             // Now parent the prompt canvas to the object, but maintain world space positioning
-            promptCanvas.transform.SetParent(null);  // Detach from the object so it's not affected by rotation
+            promptCanvas.transform.SetParent(null); // Detach from the object so it's not affected by rotation
 
             // Apply the desired offset (position above the object)
             promptCanvas.transform.position = transform.position + promptCanvasOffset;
@@ -170,7 +182,7 @@ namespace InteractableSystem
             promptCanvas.SetActive(false);
         }
 
-        
+
         private void Update()
         {
             if (promptCanvas != null && promptCanvas.activeSelf)
@@ -185,43 +197,48 @@ namespace InteractableSystem
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("Player")) // Check if the collider belongs to the player
+            if (other.CompareTag("Player")) // Check if the _collider belongs to the player
             {
                 //check with dot product if the player is facing the object
                 Vector3 directionToPlayer = other.transform.position - transform.position;
                 directionToPlayer.Normalize();
-                
+
                 Vector3 playerForward = other.transform.forward;
                 playerForward.Normalize();
-                
+
                 float dotProduct = Vector3.Dot(directionToPlayer, playerForward);
-                
+
                 if (dotProduct > 0.7f)
                 {
                     DisablePromptCanvas();
                     return;
                 }
-                
+
                 EnablePromptCanvas();
             }
         }
-        
-        
+
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player")) // Check if the collider belongs to the player
+            if (other.CompareTag("Player")) // Check if the _collider belongs to the player
             {
                 DisablePromptCanvas();
             }
         }
 
+        /// <summary>
+        /// Enable the prompt canvas.
+        /// </summary>
         public void EnablePromptCanvas()
         {
             if (promptCanvas != null && !isEquipped)
                 promptCanvas.SetActive(true);
         }
 
+        /// <summary>
+        /// Disable the prompt canvas.
+        /// </summary>
         public void DisablePromptCanvas()
         {
             if (promptCanvas != null)
@@ -305,7 +322,7 @@ namespace InteractableSystem
             EditorGUILayout.LabelField("Prompt Settings", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(promptCanvasProp, new GUIContent("Prompt Canvas"));
             EditorGUILayout.PropertyField(promptTriggerTagProp, new GUIContent("Prompt Trigger Tag"));
-            
+
             // Draw new properties
             EditorGUILayout.PropertyField(promptCanvasOffsetProp, new GUIContent("Prompt Canvas Offset"));
             EditorGUILayout.PropertyField(useWorldSpaceDirectionsProp, new GUIContent("Use World Space Directions"));

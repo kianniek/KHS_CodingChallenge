@@ -9,40 +9,34 @@ namespace Animation
 	//This script controls the character's animation by passing velocity values and other information ('isGrounded') to an animator component;
 	public class AnimationControl : MonoBehaviour {
 
-		Controller controller;
-		Animator animator;
-		Transform animatorTransform;
-		Transform tr;
+		private Controller controller;
+		private Animator animator;
+		private Transform animatorTransform;
 
-		//Whether the character is using the strafing blend tree;
+		[Tooltip("Whether the character is using the strafing blend tree")]
 		public bool useStrafeAnimations = false;
 
-		//Velocity threshold for landing animation;
+		[Tooltip("Velocity threshold for landing animation")]
 		//Animation will only be triggered if downward velocity exceeds this threshold;
 		public float landVelocityThreshold = 5f;
 
 		private float smoothingFactor = 40f;
 		Vector3 oldMovementVelocity = Vector3.zero;
 
-		//Setup;
-		void Awake () {
+		private void Awake () {
 			controller = GetComponent<Controller>();
 			animator = GetComponentInChildren<Animator>();
 			animatorTransform = animator.transform;
-
-			tr = transform;
 		}
 
-		//OnEnable;
-		void OnEnable()
+		private void OnEnable()
 		{
 			//Connect events to controller events;
 			controller.OnLand += OnLand;
 			controller.OnJump += OnJump;
 		}
 
-		//OnDisable;
-		void OnDisable()
+		private void OnDisable()
 		{
 			//Disconnect events to prevent calls to disabled gameobjects;
 			controller.OnLand -= OnLand;
@@ -56,14 +50,14 @@ namespace Animation
 			Vector3 _velocity = controller.GetVelocity();
 
 			//Split up velocity;
-			Vector3 _horizontalVelocity = VectorMath.RemoveDotVector(_velocity, tr.up);
+			Vector3 _horizontalVelocity = VectorMath.RemoveDotVector(_velocity, transform.up);
 			Vector3 _verticalVelocity = _velocity - _horizontalVelocity;
 
 			//Smooth horizontal velocity for fluid animation;
 			_horizontalVelocity = Vector3.Lerp(oldMovementVelocity, _horizontalVelocity, smoothingFactor * Time.deltaTime);
 			oldMovementVelocity = _horizontalVelocity;
 
-			animator.SetFloat("VerticalSpeed", _verticalVelocity.magnitude * VectorMath.GetDotProduct(_verticalVelocity.normalized, tr.up));
+			animator.SetFloat("VerticalSpeed", _verticalVelocity.magnitude * VectorMath.GetDotProduct(_verticalVelocity.normalized, transform.up));
 			animator.SetFloat("HorizontalSpeed", _horizontalVelocity.magnitude);
 
 			//If animator is strafing, split up horizontal velocity;
@@ -82,7 +76,7 @@ namespace Animation
 		void OnLand(Vector3 _v)
 		{
 			//Only trigger animation if downward velocity exceeds threshold;
-			if(VectorMath.GetDotProduct(_v, tr.up) > -landVelocityThreshold)
+			if(VectorMath.GetDotProduct(_v, transform.up) > -landVelocityThreshold)
 				return;
 
 			animator.SetTrigger("OnLand");

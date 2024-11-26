@@ -7,9 +7,10 @@ namespace EquipmentSystem
     public class AmmoClip : Item
     {
         private EquipmentSystemManager equipmentSystemManager;
+        
         [SerializeField] private int ammoCount = 30;
         [SerializeField] private bool consumeOnUse = true;
-
+        
         public int AmmoCount
         {
             get => ammoCount;
@@ -76,6 +77,10 @@ namespace EquipmentSystem
             Debug.Log("Ammo clip secondary use.");
         }
 
+        /// <summary>
+        /// Set the ammo count of the ammo clip.
+        /// </summary>
+        /// <param name="ammo">The amount to add to the ammoCount</param>
         public void SetAmmoCount(int ammo)
         {
             ammoCount = ammo;
