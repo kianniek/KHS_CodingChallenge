@@ -64,9 +64,3 @@ Here is a simplified view of the project structure:
 
 - Unity 2020.3 or newer
 - C# scripting knowledge for customization or enhancement of the system
-
-## Acknowledgements
-
-- **Knuckle Head Studios** for supporting this equipment system project.
-- Unity Technologies for providing Unity and making game development accessible.
-- C# programming community for inspiration and solutions.
