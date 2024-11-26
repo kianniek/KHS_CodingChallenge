@@ -1,5 +1,7 @@
 # Equipment System made as a coding challenge for **Knuckle Head Studios**
 
+> [Play on Itch.io](https://kosmo-gd.itch.io/khs-codingchallenge)
+
 ## Overview
 This repository contains a Unity-based equipment system developed using C# for **Knuckle Head Studios**. The system allows players to equip and interact with various items, including weapons, static objects, and wearable items. The equipment system demonstrates how items can be handled, equipped, and used within a player's hands and head.
 
